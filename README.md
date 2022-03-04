@@ -6,7 +6,6 @@
 5. 点击开始修改岛配置
 6. 1.0版本没有任何保护和过滤机制
 7. 1.0版本不支持对未存在的岛配置进行修改
-![BW6_@~GX0UM8ZB_V~ LL}U6](https://user-images.githubusercontent.com/78841286/156689611-6880de17-84a0-402f-a25e-42fbae03645d.png)
 
-
-![O{Q6 MFM`O%KN3I6DHE86JS](https://user-images.githubusercontent.com/78841286/156689340-ff4e33b0-591b-415c-bb0b-8025cf52dadd.png)
+![)DK03Y9ND0`IQS(V1{5HD8C](https://user-images.githubusercontent.com/78841286/156691598-b5e3e29b-3d9f-4e47-b970-7c99fc764cf6.png)
+![T~I0_5{6B%E0T_}V848}KHN](https://user-images.githubusercontent.com/78841286/156691604-f89e9d5e-a5bc-4895-a92a-72f5384a0a70.png)
