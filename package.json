@@ -1,0 +1,26 @@
+{
+    "name": "pipixia-automatic-configuration",
+    "version": "0.0.1",
+    "description": "pipixia-automatic-configuration",
+    "author": "whishtQ800",
+    "main": "src/main/main.js",
+    "main-menu": {
+        "i18n:MAIN_MENU.package.title/拉取皮皮虾/开始拉取": {
+            "message": "pipixia-automatic-configuration:start"
+        },
+        "i18n:MAIN_MENU.package.title/拉取皮皮虾/打开主面板": {
+            "message": "pipixia-automatic-configuration:open"
+        }
+    },
+    "panel": {
+        "main": "panel/index.js",
+        "type": "dockable",
+        "title": "Simple Panel",
+        "width": 400,
+        "height": 300
+    },
+    "scene-script": "src/main/scene-walker.js",
+    "dependencies": {
+        "ws": "^8.5.0"
+    }
+}
