@@ -1,7 +1,7 @@
 ### 使用说明:
 1. 登录cookie填入皮皮虾的cookie
 2. 当前只支持填入一个课件id
-3.1.0版本没有任何保护和过滤机制
+3. 1.0版本没有任何保护和过滤机制
 ![BW6_@~GX0UM8ZB_V~ LL}U6](https://user-images.githubusercontent.com/78841286/156689611-6880de17-84a0-402f-a25e-42fbae03645d.png)
 
 
