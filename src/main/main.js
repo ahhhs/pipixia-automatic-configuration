@@ -17,18 +17,13 @@ module.exports = {
 
         },
         open() {
-            Editor.log("运行界面了");
-            // getLevelConfig();
-            // setLevelConfig();
+            Editor.log("打开界面");
             Editor.Panel.open('pipixia-automatic-configuration');
         },
         click(event, data) {
-            // Editor.log("点击提交..", data);
             if (data) {
                 let dataArr = data.split(",");
-                Editor.log("获得的id:", dataArr);
                 startMain(dataArr, ConfigManager.get().id);
-                // startMain(data, ConfigManager.get().id);
             }
         },
         initpanel() {
@@ -165,53 +160,3 @@ async function setLevelConfig(configPath, data, versionSet) {
         });
     });
 }
-
-
-
-// /**
-//  * 修改config里的内容
-//  */
-// async function getLevelConfig(courseid, versionid) {
-//     var configPath = ConfigManager.get().config + ".json";
-//     let file = await FileUtil.readFile(configPath);
-//     let data = null;
-//     try {
-//         data = JSON.parse(file);
-//     } catch (error) {
-//         Editor.log('File parsing failure!', path);
-//         Editor.log('Error:', error);
-//     }
-//     if (!data) {
-//         return null;
-//     }
-//     await setLevelConfig(configPath, courseid, data, versionid);
-//     return data;
-// }
-// /**
-//  * 修改confi配置
-//  * @param {*} configPath config路径
-//  * @param {*} courseid 课件id
-//  * @param {*} data 皮皮虾配置文件
-//  * @param {*} versionid 皮皮虾名
-//  */
-// async function setLevelConfig(configPath, courseid, data, versionid) {
-//     let new_str = JSON.stringify(data);
-//     let new_json = JSON.parse(new_str);
-//     var index = 0;
-//     var jsonData
-//     for (let k in new_json["levels"]) {
-//         let json = new_json["levels"][k];
-//         if (new_json["levels"][k]["ppx_id"] == courseid) {
-//             json["data"] = versionid + "";
-//             index = parseInt(k);
-//             jsonData = json;
-//         }
-//     }
-//     new_json["levels"][index] = jsonData;
-//     Fs.writeFile(configPath, JSON.stringify(new_json), 'utf-8', function (arr) {
-//         Editor.log('------modify successfully!------');
-//         Editor.assetdb.refresh("db://assets", function (err, results) {
-//             Editor.log('updata asset!');
-//         });
-//     });
-// }
