@@ -4,8 +4,7 @@
 3. 填入存放pipixa配置的绝对路径
 4. 填入要修改的config绝对路径
 5. 点击开始修改岛配置
-6. 1.0版本没有任何保护和过滤机制
-7. 1.0版本不支持对未存在的岛配置进行修改
+6. 批量修改题型时,用英文","隔开 (6674,6675)
 
 ![)DK03Y9ND0`IQS(V1{5HD8C](https://user-images.githubusercontent.com/78841286/156691598-b5e3e29b-3d9f-4e47-b970-7c99fc764cf6.png)
 ![T~I0_5{6B%E0T_}V848}KHN](https://user-images.githubusercontent.com/78841286/156691604-f89e9d5e-a5bc-4895-a92a-72f5384a0a70.png)

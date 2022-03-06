@@ -129,34 +129,81 @@ async function setLevelConfig(configPath, data, versionSet) {
     let new_json = JSON.parse(new_str);
     var indexArr = [];
     var jsonDataArr = []
-    // Editor.log("准备修改config", new_json["levels"]);
-    for (let k in new_json["levels"]) {
-        let json = new_json["levels"][k];
-        let index = 0;
-        versionSet.forEach(function (value, key, map) {
-            if (new_json["levels"][k]["ppx_id"] == key) {
-                json["data"] = value + "";
-                indexArr.push(parseInt(index));
-                jsonDataArr.push(json)
-            }
-            index++;
-        });
-    }
-    for (let i = 0; i < indexArr.length; i++) {
-        new_json["levels"][indexArr[i]] = jsonDataArr[i];
-    }
-    Fs.writeFile(configPath, JSON.stringify(new_json), 'utf-8', function (arr) {
+    var deletePiPiXia = [];
+    let pipixiaData = ConfigManager.get().pipixiaPath;
 
+    let initData = async () => {
+        new_json["levels"].forEach(function (value, index, arr) {
+            let data = value["data"];
+            versionSet.forEach(function (values, key, arr) {
+                if (value["ppx_id"] == key) {
+                    if (data !== values) {
+                        deletePiPiXia.push(data);
+                        Editor.log("获得需要删除的皮皮虾数据===>", deletePiPiXia);
+                    }
+                    value["data"] = values + "";
+                    indexArr.push(parseInt(index));
+                    jsonDataArr.push(value)
+                }
+            });
+        });
+        for (let i = 0; i < indexArr.length; i++) {
+            new_json["levels"][indexArr[i]] = jsonDataArr[i];
+        }
+    }
+
+    await initData();
+    Fs.writeFile(configPath, JSON.stringify(new_json), 'utf-8', function (arr) {
         let configData = ConfigManager.get().config;
-        let pipixiaData = ConfigManager.get().pipixiaPath;
         let configUrl = configData.split("assets");
         let pipixiaUrl = pipixiaData.split("assets");
-        Editor.log('------modify successfully!------');
-        Editor.assetdb.refresh("db://assets/" + pathData.join(pipixiaUrl[pipixiaUrl.length - 1]), function (err, results) {
+        Editor.assetdb.refresh("db://assets/" + pathData.join(configUrl[configUrl.length - 1] + ".json"), function (err, results) {
             Editor.log('updata asset!');
         });
-        Editor.assetdb.refresh("db://assets/" + pathData.join(configUrl[configUrl.length - 1]), function (err, results) {
+        Editor.assetdb.refresh("db://assets/" + pathData.join(pipixiaUrl[pipixiaUrl.length - 1]), function (err, results) {
             Editor.log('updata asset!');
+            deletePreviousPiPiXia(deletePiPiXia);
         });
     });
 }
+
+async function deletePreviousPiPiXia(pipixiaArr) {
+    function delPath(path) {
+        // if (path.indexOf('./') !== 0 || path.indexOf('../') !== 0) {
+        //     return console.log("为了安全仅限制使用相对定位..");
+        // }
+        if (!Fs.existsSync(path)) {
+            console.log("路径不存在");
+            return "路径不存在";
+        }
+        var info = Fs.statSync(path);
+        if (info.isDirectory()) {//目录
+            var data = Fs.readdirSync(path);
+            if (data.length > 0) {
+                for (var i = 0; i < data.length; i++) {
+                    delPath(`${path}/${data[i]}`); //使用递归
+                    if (i == data.length - 1) { //删了目录里的内容就删掉这个目录
+                        delPath(`${path}`);
+                    }
+                }
+            } else {
+                console.log("删除空目录");
+                Fs.rmdirSync(path);//删除空目录
+            }
+        } else if (info.isFile()) {
+            console.log("删除文件");
+            Fs.unlinkSync(path);//删除文件
+        }
+    }
+    for (let i = 0; i < pipixiaArr.length; i++) {
+        // deletePiPiXia.push(pathData.json(pipixiaData + "/" + data + ".txt"));
+        delPath(pathData.join(ConfigManager.get().pipixiaPath + "/" + pipixiaArr[i] + ".txt"));
+    }
+    // delPath("D:\\v2rayw");  //确认路径。__ 。没有后悔药
+    let pipixiaData = ConfigManager.get().pipixiaPath;
+    let pipixiaUrl = pipixiaData.split("assets");
+    Editor.assetdb.refresh("db://assets/" + pathData.join(pipixiaUrl[pipixiaUrl.length - 1]), function (err, results) {
+        Editor.log("<===remove the end===>");
+        Editor.log('updata asset!');
+    });
+} 
