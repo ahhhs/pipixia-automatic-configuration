@@ -1,0 +1,46 @@
+
+
+<div style="width: 100%; height: 100%; overflow-x: hidden; overflow-y: auto">
+
+  <div class="wrapper">
+    <ui-box-container>
+    <!-- 一些标签元素 -->
+    <ui-prop id="cookie" name="登录cookie:" type="string"><ui-input></ui-input></ui-prop>
+        
+    <ui-prop id="keycourse" name="课件id:" type="string"><ui-input></ui-input></ui-prop>
+        
+    <ui-prop name="是否配置双版本"> <ui-checkbox id="optionbox"></ui-checkbox> </ui-prop>
+
+    <ui-prop id="pipixia" name="pipixia配置存放路径:" type="string"><ui-input></ui-input></ui-prop>
+
+    <ui-prop id="chapter" name="岛配置文件路径" type="string"> <ui-input></ui-input> </ui-prop>
+    
+  </div>
+  <br>
+  <br>
+  
+  <div class="layout horizontal center-justified">
+    <ui-button class="blue" id="cookiebtn" class="green">修改登录cookie</ui-button>
+    <ui-button class="blue" id="pipixiabtn" class="green">修改pipixia配置路径</ui-button>
+    <ui-button class="blue" id="chapterbtn" class="green">修改岛配置路径</ui-button>
+    <ui-button class="blue" id="submitbtn" class="green">开始修改岛配置</ui-button>
+  </div>
+  <br>
+  <br>
+  <!-- 一些标签元素 -->
+  <ui-prop name="测试" foldable >
+    
+  <ui-prop @confirm="onConfirm" name="" type="number" value='0'></ui-prop>
+    <!--需要使用嵌套子组件的方式,将子组件放置在 class 样式为 child 的元素中-->
+    <div class="child">
+        <ui-prop confirm name="课件" v-for="item in itemCount" v-bind:key="item.id" type="object" value='{"id": 0, "pre_level": "", "name": ""}'></ui-prop>
+    </div>
+  </ui-prop>
+
+  <!-- 一些标签元素end -->
+  </ui-prop>
+  <br>
+  <br>
+    <div class="layout horizontal center" style="font-size:12px"><span id="label"></span> </div>
+
+</div>

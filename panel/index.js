@@ -1,42 +1,24 @@
 // panel/index.js
+
+const Fs = require('fire-fs');
+const Path = require('fire-path');
+let eventValue = 0;
 Editor.Panel.extend({
     style: `
     :host { margin: 5px; }
     h2 { color: #f90; }
   `,
 
-    template: `
+    // template: Fs.readFileSync(
+    //     Editor.url('packages://pipixia-automatic-configuration/panel/index.html'),
+    //     'utf-8'
+    // ),
 
-  <div class="wrapper">
-  <ui-box-container>
-  <!-- 一些标签元素 -->
-  <ui-prop id="cookie" name="登录cookie:" type="string">
-      <ui-input></ui-input>
-  </ui-prop>
-  <ui-prop id="keycourse" name="课件id:" type="string">
-      <ui-input></ui-input>
-  </ui-prop>
-  <ui-prop name="是否配置双版本">
-    <ui-checkbox id="optionbox"></ui-checkbox>
-  </ui-prop>
-  <ui-prop id="pipixia" name="pipixia配置存放路径:" type="string">
-      <ui-input></ui-input>
-  </ui-prop>
-  <ui-prop id="chapter" name="岛配置文件路径" type="string">
-      <ui-input></ui-input>
-  </ui-prop>
-  </ui-box-container>
-  </div>
-  <br>
-  <br>
-  <div class="layout horizontal center-justified">
-  <ui-button id="cookiebtn" "class="green">修改登录cookie</ui-button>
-  <ui-button id="pipixiabtn" "class="green">修改pipixia配置路径</ui-button>
-  <ui-button id="chapterbtn" "class="green">修改岛配置路径</ui-button>
-  <ui-button id="submitbtn" "class="green">开始修改岛配置</ui-button>
-  </div>
-  <div><span id="label"></span></div>
-  `,
+    template: Fs.readFileSync(
+        Editor.url('packages://pipixia-automatic-configuration/panel/index.html'),
+        'utf-8'
+    ),
+
     $: {
         submitbtn: '#submitbtn', //提交按钮
         cookie: '#cookie', //用户秘钥
@@ -48,8 +30,26 @@ Editor.Panel.extend({
         keycourse: '#keycourse', //课程id
         label: '#label',
         optionbox: '#optionbox', //双版本选项
+        num: 'ui-num-input', //选项框
+        courseware: '#courseware',
     },
     ready() {
+        new window.Vue({
+            el: this.shadowRoot,
+            data: {
+                itemCount: [],
+            },
+            nextIndex: 0,
+            methods: {
+                onConfirm(event) {
+                    this.itemCount = [];
+                    for (let i = 0; i < parseInt(event.target._value); i++) {
+                        this.itemCount.push({ id: this.nextIndex++, value: '' });
+                    }
+                },
+            },
+        });
+
         Editor.Ipc.sendToMain('pipixia-automatic-configuration:initpanel');
         //登录id
         this.$cookiebtn.addEventListener('confirm', () => {

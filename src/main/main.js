@@ -233,6 +233,8 @@ async function setLevelConfig(configPath, data, versionSet) {
         }
     };
     await initData();
+
+    //保存数据
     Fs.writeFile(configPath, JSON.stringify(new_json), 'utf-8', function (arr) {
         let configData = ConfigManager.get().config;
         let configUrl = configData.split('assets');
