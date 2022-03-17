@@ -33,8 +33,13 @@
   <ui-prop @confirm="onConfirm" name="" type="number" value='0'></ui-prop>
     <!--需要使用嵌套子组件的方式,将子组件放置在 class 样式为 child 的元素中-->
     <div class="child">
-        <ui-prop confirm name="课件" v-for="item in itemCount" v-bind:key="item.id" type="object" value='{"id": 0, "pre_level": "", "name": ""}'></ui-prop>
-    </div>
+        <!-- <ui-prop  @change="onChange" confirm name="课件" v-for="item in itemCount" v-bind:key="item.id" type="object" value='{"id": 0, "pre_level": "", "name": ""}'></ui-prop> -->
+        <ui-prop   name="课件" v-for="item in itemCount" v-bind:key="item.id">
+          <ui-prop  @change="onChangeId"  name="id" v-bind:key="item.id"  type="string"></ui-prop>
+          <ui-prop  @change="onChangeLevel"  name="per_level" v-bind:key="item.id" type="string"></ui-prop>
+          <ui-prop  @change="onChangeName"  name="name" v-bind:key="item.id" type="string"></ui-prop>
+        </ui-prop>
+
   </ui-prop>
 
   <!-- 一些标签元素end -->

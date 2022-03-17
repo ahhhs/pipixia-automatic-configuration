@@ -23,7 +23,7 @@ module.exports = {
             if (data) {
                 //是双版本
                 let dataArr = data.split(',');
-                startMain(dataArr, ConfigManager.get().id); //单版本
+                //startMain(dataArr, ConfigManager.get().id); //单版本
             }
         },
         initpanel() {

@@ -31,7 +31,6 @@ Editor.Panel.extend({
         label: '#label',
         optionbox: '#optionbox', //双版本选项
         num: 'ui-num-input', //选项框
-        courseware: '#courseware',
     },
     ready() {
         new window.Vue({
@@ -41,11 +40,36 @@ Editor.Panel.extend({
             },
             nextIndex: 0,
             methods: {
+                //监听光标离开
                 onConfirm(event) {
-                    this.itemCount = [];
-                    for (let i = 0; i < parseInt(event.target._value); i++) {
-                        this.itemCount.push({ id: this.nextIndex++, value: '' });
+                    const arrValue = parseInt(event.target._value);
+                    //如果传进来的数,比原数组大,说明是新增的,
+                    if (arrValue > this.itemCount.length || this.itemCount.length == 0) {
+                        let index = arrValue - this.itemCount.length;
+                        for (let i = 0; i < index; i++) {
+                            this.itemCount.push({ id: this.nextIndex++, value: '' });
+                        }
+                    } else if (arrValue < this.itemCount.length) {
+                        let index = this.itemCount.length - arrValue;
+                        for (let i = 0; i < index; i++) {
+                            this.itemCount.pop();
+                        }
                     }
+                },
+                onChangeId(event) {
+                    Editor.log('id');
+                    for (let i in event.target) {
+                        Editor.log('你妈:', i);
+                        Editor.log('你妈:', event.target[i]);
+                        Editor.log('你妈0000000');
+                    }
+                    Editor.log('查看:', event.target.name);
+                },
+                onChangeLevel(event) {
+                    Editor.log('level', event.detail);
+                },
+                onChangeName(event) {
+                    Editor.log('name', event.detail);
                 },
             },
         });
@@ -83,6 +107,8 @@ Editor.Panel.extend({
                 this.$keycourse.value,
                 this.$optionbox.checked
             );
+
+            Editor.log('课件s:', this.$demo);
         });
     },
     messages: {
