@@ -29,7 +29,8 @@ Editor.Panel.extend({
         chapterbtn: '#chapterbtn', //修改岛配置按钮
         keycourse: '#keycourse', //课程id
         label: '#label',
-        optionbox: '#optionbox', //双版本选项
+        optionbox_zh: '#optionbox_zh', //中文版本选项
+        optionbox_en: '#optionbox_en', //英文版本选项
         num: 'ui-num-input', //选项框
     },
     ready() {
@@ -59,11 +60,11 @@ Editor.Panel.extend({
                 onChangeId(event) {
                     Editor.log('id');
                     for (let i in event.target) {
-                        Editor.log('你妈:', i);
-                        Editor.log('你妈:', event.target[i]);
-                        Editor.log('你妈0000000');
+                        // Editor.log('你妈:', i);
+                        // Editor.log('你妈:', event.target[i]);
+                        // Editor.log('你妈0000000');
                     }
-                    Editor.log('查看:', event.target.name);
+                    // Editor.log('查看:', event.target.name);
                 },
                 onChangeLevel(event) {
                     Editor.log('level', event.detail);
@@ -102,13 +103,11 @@ Editor.Panel.extend({
             setTimeout(() => {
                 this.$label.innerText = '';
             }, 1500);
-            Editor.Ipc.sendToMain(
-                'pipixia-automatic-configuration:click',
-                this.$keycourse.value,
-                this.$optionbox.checked
-            );
-
-            Editor.log('课件s:', this.$demo);
+            Editor.Ipc.sendToMain('pipixia-automatic-configuration:click', this.$keycourse.value, {
+                zh: this.$optionbox_zh.checked,
+                en: this.$optionbox_en.checked,
+            });
+            // Editor.log('课件s:', this.$demo);
         });
     },
     messages: {
@@ -120,7 +119,8 @@ Editor.Panel.extend({
             this.$cookie.value = arr[1];
             this.$pipixia.value = arr[2];
             this.$chapter.value = arr[0];
-            this.$optionbox.checked = false;
+            this.$optionbox_zh.checked = false;
+            this.$optionbox_en.checked = false;
         },
     },
 });

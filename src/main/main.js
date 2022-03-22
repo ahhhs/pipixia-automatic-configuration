@@ -3,7 +3,10 @@ const Fs = require('fs');
 const pathData = require('path');
 const ConfigManager = require('../common/config-manager');
 const FileUtil = require('../eazax/file-util');
-let moreVersions = false;
+let moreVersions = {
+    zh: false,
+    en: false,
+};
 module.exports = {
     load() {
         // execute when package loaded
@@ -20,10 +23,11 @@ module.exports = {
         },
         click(event, data, isMoreVersions) {
             moreVersions = isMoreVersions;
+            Editor.log('查看勾选的版本L:', moreVersions);
             if (data) {
                 //是双版本
                 let dataArr = data.split(',');
-                //startMain(dataArr, ConfigManager.get().id); //单版本
+                startMain(dataArr, ConfigManager.get().id); //单版本
             }
         },
         initpanel() {
@@ -72,12 +76,23 @@ async function startMain(courseidArr, id) {
     let zhCourseidArr;
     let enCourseidArr;
     let versionJsonArr;
-    if (moreVersions) {
+    // if (moreVersions) {
+    //     enCourseidArr = await downloadData(courseidArr, id, 'en-us');
+    //     zhCourseidArr = await downloadData(courseidArr, id, 'zh-cn');
+    //     versionJsonArr = jointVersionData(zhCourseidArr, enCourseidArr);
+    // } else {
+    //     versionJsonArr = await downloadData(courseidArr, id, 'en-us');
+    // }
+    if (moreVersions.en && moreVersions.zh) {
         enCourseidArr = await downloadData(courseidArr, id, 'en-us');
         zhCourseidArr = await downloadData(courseidArr, id, 'zh-cn');
         versionJsonArr = jointVersionData(zhCourseidArr, enCourseidArr);
     } else {
-        versionJsonArr = await downloadData(courseidArr, id, 'en-us');
+        if (moreVersions.en) {
+            versionJsonArr = await downloadData(courseidArr, id, 'en-us');
+        } else if (moreVersions.zh) {
+            versionJsonArr = await downloadData(courseidArr, id, 'zh-cn');
+        }
     }
     getLevel(versionJsonArr);
 }
@@ -211,7 +226,12 @@ async function setLevelConfig(configPath, data, versionSet) {
                             }
                         }
                         // value['data'] = "{\"zh-cn\":\""+ mapJson.get("zh")+"\",\"default\":\""+mapJson.get("en")+"\"}";
-                        value['data'] = "{\"zh-cn\":\""+ mapJson.get("zh")+"\",\"default\":\""+mapJson.get("en")+"\"}";
+                        value['data'] =
+                            '{"zh-cn":"' +
+                            mapJson.get('zh') +
+                            '","default":"' +
+                            mapJson.get('en') +
+                            '"}';
                         indexArr.push(parseInt(index));
                         jsonDataArr.push(value);
                     }
