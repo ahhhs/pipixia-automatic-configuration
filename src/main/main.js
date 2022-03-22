@@ -226,12 +226,7 @@ async function setLevelConfig(configPath, data, versionSet) {
                             }
                         }
                         // value['data'] = "{\"zh-cn\":\""+ mapJson.get("zh")+"\",\"default\":\""+mapJson.get("en")+"\"}";
-                        value['data'] =
-                            '{"zh-cn":"' +
-                            mapJson.get('zh') +
-                            '","default":"' +
-                            mapJson.get('en') +
-                            '"}';
+                        value['data'] = "{\"zh-cn\":\""+ mapJson.get("zh")+"\",\"default\":\""+mapJson.get("en")+"\"}";
                         indexArr.push(parseInt(index));
                         jsonDataArr.push(value);
                     }

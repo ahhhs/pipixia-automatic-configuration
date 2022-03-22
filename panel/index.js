@@ -60,9 +60,7 @@ Editor.Panel.extend({
                 onChangeId(event) {
                     Editor.log('id');
                     for (let i in event.target) {
-                        // Editor.log('你妈:', i);
-                        // Editor.log('你妈:', event.target[i]);
-                        // Editor.log('你妈0000000');
+                       
                     }
                     // Editor.log('查看:', event.target.name);
                 },
